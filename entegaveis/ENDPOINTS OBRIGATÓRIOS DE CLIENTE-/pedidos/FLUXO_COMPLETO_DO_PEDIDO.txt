@@ -1,0 +1,77 @@
+FLUXO COMPLETO DO PEDIDO
+
+[
+    {
+        "id": 1,
+        "clienteId": 3,
+        "restauranteId": 1,
+        "enderecoEntrega": null,
+        "total": 179.40,
+        "status": "CANCELADO",
+        "dataPedido": "2025-07-20T22:28:17.752508",
+        "itens": [
+            {
+                "produtoId": 2,
+                "nomeProduto": "X-Bagunça",
+                "quantidade": 3,
+                "precoUnitario": 29.90
+            },
+            {
+                "produtoId": 2,
+                "nomeProduto": "X-Bagunça",
+                "quantidade": 3,
+                "precoUnitario": 29.90
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "clienteId": 1,
+        "restauranteId": 2,
+        "enderecoEntrega": null,
+        "total": 103.60,
+        "status": "PREPARANDO",
+        "dataPedido": "2025-07-20T22:42:51.39316",
+        "itens": [
+            {
+                "produtoId": 1,
+                "nomeProduto": "Pizza Margherita",
+                "quantidade": 3,
+                "precoUnitario": 25.90
+            },
+            {
+                "produtoId": 1,
+                "nomeProduto": "Pizza Margherita",
+                "quantidade": 1,
+                "precoUnitario": 25.90
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "clienteId": 2,
+        "restauranteId": 1,
+        "enderecoEntrega": null,
+        "total": 0.00,
+        "status": "CRIADO",
+        "dataPedido": "2025-07-20T22:53:02.627275",
+        "itens": []
+    },
+    {
+        "id": 4,
+        "clienteId": 2,
+        "restauranteId": 1,
+        "enderecoEntrega": null,
+        "total": 51.80,
+        "status": "SAIU_PARA_ENTREGA",
+        "dataPedido": "2025-07-20T23:04:40.41434",
+        "itens": [
+            {
+                "produtoId": 1,
+                "nomeProduto": "Pizza Margherita",
+                "quantidade": 2,
+                "precoUnitario": 25.90
+            }
+        ]
+    }
+]
