@@ -15,6 +15,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.deliverytech.delivery_api.dto.response.ProdutoResponse;
+import com.deliverytech.delivery_api.model.Produto;
+import com.deliverytech.delivery_api.service.ProdutoService;
 
 @RestController
 @RequestMapping("/api/restaurantes")
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 public class RestauranteController {
 
     private final RestauranteService restauranteService;
+    private final ProdutoService produtoService;
 
     @PostMapping
     public ResponseEntity<RestauranteResponse> cadastrar(@Valid @RequestBody RestauranteRequest request) {
@@ -109,5 +113,32 @@ public class RestauranteController {
             return ResponseEntity.badRequest()
                 .body(Map.of("erro", e.getMessage()));
         }
+    }
+
+    /**
+     * Buscar produtos de um restaurante
+     * GET /api/restaurantes/{id}/produtos
+     */
+    @GetMapping("/{id}/produtos")
+    public ResponseEntity<List<ProdutoResponse>> buscarProdutosPorRestaurante(@PathVariable Long id) {
+        // Verificar se restaurante existe
+        restauranteService.buscarPorId(id)
+            .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+        
+        // Buscar produtos do restaurante
+        List<Produto> produtos = produtoService.buscarPorRestaurante(id);
+        
+        // Converter para Response
+        List<ProdutoResponse> response = produtos.stream()
+            .map(p -> new ProdutoResponse(
+                p.getId(), 
+                p.getNome(), 
+                p.getCategoria(), 
+                p.getDescricao(), 
+                p.getPreco(), 
+                p.getDisponivel()))
+            .collect(Collectors.toList());
+        
+        return ResponseEntity.ok(response);
     }
 }

@@ -1,0 +1,17 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 22/07/2025 22:59:06
+Método: GET
+URL Completa: http://localhost:8080/api/restaurantes/1/produtos
+Status HTTP: 200
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+[ {
+  "id" : 1,
+  "nome" : "Pizza Calabresa",
+  "categoria" : "Pizza",
+  "descricao" : null,
+  "preco" : 45.9,
+  "disponivel" : true
+} ]

@@ -45,4 +45,5 @@ public interface PedidoService {
     Optional<Pedido> buscarPorIdComItens(Long id);
     List<Pedido> buscarPorClienteComItens(Long clienteId);
     List<Pedido> listarTodos();
+    void deletar(Long id);
 }

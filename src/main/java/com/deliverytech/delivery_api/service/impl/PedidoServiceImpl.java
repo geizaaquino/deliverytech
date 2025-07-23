@@ -101,14 +101,23 @@ public class PedidoServiceImpl implements PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    @Override
-    public Pedido atualizarStatus(Long pedidoId, StatusPedido novoStatus) {
-        Pedido pedido = pedidoRepository.findById(pedidoId)
-                .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
-
-        pedido.setStatus(novoStatus);
-        return pedidoRepository.save(pedido);
-    }
+@Override
+@Transactional
+public Pedido atualizarStatus(Long pedidoId, StatusPedido novoStatus) {
+    log.info("Atualizando status do pedido {} para: {}", pedidoId, novoStatus);
+    
+    Pedido pedido = pedidoRepository.findById(pedidoId)
+        .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+    
+    log.info("Status atual do pedido {}: {}", pedidoId, pedido.getStatus());
+    
+    pedido.setStatus(novoStatus);
+    
+    Pedido salvo = pedidoRepository.save(pedido);
+    log.info("Status do pedido {} atualizado com sucesso para: {}", pedidoId, novoStatus);
+    
+    return salvo;
+}
 
     // ✅ IMPLEMENTAR método calcularTotal
     @Override
@@ -209,5 +218,14 @@ public class PedidoServiceImpl implements PedidoService {
         
         log.info("Total calculado: R$ {}", total);
         return total;
+    }
+
+    @Override
+    @Transactional
+    public void deletar(Long id) {
+        Pedido pedido = pedidoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+        pedidoRepository.delete(pedido);
+        log.info("Pedido deletado - ID: {}", id);
     }
 }

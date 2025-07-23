@@ -1,0 +1,28 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 22/07/2025 22:55:32
+Método: POST
+URL Completa: http://localhost:8080/api/pedidos
+Status HTTP: 404
+Content-Type: null
+
+=== DADOS ENVIADOS ===
+{
+  "clienteId" : 4,
+  "restauranteId" : 3,
+  "enderecoEntrega" : {
+    "numero" : "350",
+    "bairro" : "José Aldo",
+    "cidade" : "Campo Grande",
+    "estado" : "Mato Grosso do Sul",
+    "cep" : "79073553",
+    "complemento" : "Casa",
+    "rua" : "cafezais"
+  },
+  "itens" : [ {
+    "produtoId" : 1,
+    "quantidade" : 1
+  } ]
+}
+
+=== RESPOSTA REAL ===
+(Resposta vazia)
