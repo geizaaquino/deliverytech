@@ -1,0 +1,17 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 22/07/2025 19:51:58
+Método: POST
+URL Completa: http://localhost:8080/api/clientes
+Status HTTP: 400
+Content-Type: text/plain;charset=UTF-8
+
+=== DADOS ENVIADOS ===
+{
+  "nome" : "João Silva",
+  "email" : "joao@email.com",
+  "telefone" : "11999999999",
+  "endereco" : "Rua A, 123"
+}
+
+=== RESPOSTA REAL ===
+Erro: Email já cadastrado: joao@email.com

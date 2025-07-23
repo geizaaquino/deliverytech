@@ -27,4 +27,9 @@ public class Produto {
     @ManyToOne
     @JoinColumn(name = "restaurante_id")
     private Restaurante restaurante;
+
+    public boolean getAtivo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAtivo'");
+    }
 }

@@ -1,7 +1,7 @@
 package com.deliverytech.delivery_api.service.impl;
 
 import com.deliverytech.delivery_api.model.Cliente;
-import com.deliverytech.delivery_api.dto.request.ClienteRequest; // ✅ ADICIONAR IMPORT
+import com.deliverytech.delivery_api.dto.request.ClienteRequest; // ADICIONAR IMPORT
 import com.deliverytech.delivery_api.repository.ClienteRepository;
 import com.deliverytech.delivery_api.service.ClienteService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
             cliente.setNome(clienteRequest.getNome());
             cliente.setEmail(clienteRequest.getEmail());
             cliente.setTelefone(clienteRequest.getTelefone());
+            cliente.setEndereco(clienteRequest.getEndereco()); // <-----
             
             // Validar email único
             if (clienteRepository.existsByEmail(cliente.getEmail())) {
@@ -51,28 +52,8 @@ public class ClienteServiceImpl implements ClienteService {
         }
     
         /**
-         * Implementação do método cadastrar(Cliente) exigido pela interface
+         * Método auxiliar para cadastrar cliente a partir de uma entidade Cliente.
          */
-        @Override
-        public Cliente cadastrar(Cliente cliente) {
-            log.info("Iniciando cadastro de cliente: {}", cliente.getEmail());
-    
-            // Validar email único
-            if (clienteRepository.existsByEmail(cliente.getEmail())) {
-                throw new IllegalArgumentException("Email já cadastrado: " + cliente.getEmail());
-            }
-    
-            // Validações de negócio
-            validarDadosCliente(cliente);
-    
-            // Definir como ativo por padrão
-            cliente.setAtivo(true);
-    
-            Cliente clienteSalvo = clienteRepository.save(cliente);
-            log.info("Cliente cadastrado com sucesso - ID: {}", clienteSalvo.getId());
-    
-            return clienteSalvo;
-        }
 
     /**
      * Buscar cliente por ID
@@ -118,37 +99,33 @@ public class ClienteServiceImpl implements ClienteService {
      * Atualizar dados do cliente COM TODAS AS VALIDAÇÕES
      */
     @Override
-    public Cliente atualizar(Long id, Cliente clienteAtualizado) {
+    public Cliente atualizar(Long id, ClienteRequest clienteRequest) { // CORRIGIR: Cliente → ClienteRequest
         log.info("Atualizando cliente ID: {}", id);
         
         Cliente cliente = buscarPorId(id)
             .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado: " + id));
 
         // Verificar se email não está sendo usado por outro cliente
-        if (!cliente.getEmail().equals(clienteAtualizado.getEmail()) &&
-            clienteRepository.existsByEmail(clienteAtualizado.getEmail())) {
-            throw new IllegalArgumentException("Email já cadastrado: " + clienteAtualizado.getEmail());
+        if (!cliente.getEmail().equals(clienteRequest.getEmail()) && // CORRIGIR: clienteAtualizado → clienteRequest
+            clienteRepository.existsByEmail(clienteRequest.getEmail())) { // CORRIGIR
+            throw new IllegalArgumentException("Email já cadastrado: " + clienteRequest.getEmail()); // CORRIGIR
         }
+
+        // Criar cliente temporário para validação
+        Cliente clienteParaValidacao = new Cliente();
+        clienteParaValidacao.setNome(clienteRequest.getNome());
+        clienteParaValidacao.setEmail(clienteRequest.getEmail());
+        clienteParaValidacao.setTelefone(clienteRequest.getTelefone());
+        clienteParaValidacao.setEndereco(clienteRequest.getEndereco());
 
         // Validar dados atualizados
-        validarDadosCliente(clienteAtualizado);
+        validarDadosCliente(clienteParaValidacao);
 
         // Atualizar campos
-        cliente.setNome(clienteAtualizado.getNome());
-        cliente.setEmail(clienteAtualizado.getEmail());
-        
-        // Atualizar telefone e endereco (se implementados na entidade)
-        try {
-            cliente.setTelefone(clienteAtualizado.getTelefone());
-        } catch (UnsupportedOperationException e) {
-            log.warn("Campo telefone não implementado na entidade Cliente");
-        }
-        
-        try {
-            cliente.setEndereco(clienteAtualizado.getEndereco());
-        } catch (UnsupportedOperationException e) {
-            log.warn("Campo endereco não implementado na entidade Cliente");
-        }
+        cliente.setNome(clienteRequest.getNome()); // CORRIGIR
+        cliente.setEmail(clienteRequest.getEmail()); // CORRIGIR
+        cliente.setTelefone(clienteRequest.getTelefone()); // CORRIGIR
+        cliente.setEndereco(clienteRequest.getEndereco()); // CORRIGIR
 
         Cliente clienteSalvo = clienteRepository.save(cliente);
         log.info("Cliente atualizado com sucesso - ID: {}", clienteSalvo.getId());
@@ -180,6 +157,26 @@ public class ClienteServiceImpl implements ClienteService {
         
         clienteRepository.save(cliente);
         log.info("Cliente inativado com sucesso - ID: {}", id);
+    }
+
+    /**
+     * Ativar/Desativar cliente (toggle status ativo)
+     * NOVO MÉTODO para atender requisito da atividade
+     */
+    @Override
+    public Cliente ativarDesativarCliente(Long id) {
+        log.info("Alterando status do cliente ID: {}", id);
+        
+        Cliente cliente = buscarPorId(id)
+            .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado: " + id));
+
+        // Toggle do status
+        cliente.setAtivo(!cliente.getAtivo());
+        
+        Cliente clienteSalvo = clienteRepository.save(cliente);
+        log.info("Status do cliente alterado para: {} - ID: {}", clienteSalvo.getAtivo(), id);
+        
+        return clienteSalvo;
     }
 
     /**

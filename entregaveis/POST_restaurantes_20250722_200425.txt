@@ -1,0 +1,24 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 22/07/2025 20:04:25
+Método: POST
+URL Completa: http://localhost:8080/api/restaurantes
+Status HTTP: 400
+Content-Type: application/json
+
+=== DADOS ENVIADOS ===
+{
+  "nome" : "Restaurante Bom Sabor",
+  "categoria" : "Pizza",
+  "endereco" : "Av. Central, 500",
+  "taxaEntrega" : 3.5
+}
+
+=== RESPOSTA REAL ===
+{
+  "validationErrors" : {
+    "tempoEntregaMinutos" : "não deve ser nulo"
+  },
+  "error" : "Dados inválidos",
+  "timestamp" : "2025-07-22T20:04:25.8567692",
+  "status" : 400
+}

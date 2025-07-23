@@ -100,4 +100,17 @@ public class ProdutoController {
         produtoService.inativar(id);
         return ResponseEntity.noContent().build();
     }
+
+    /**
+     * Buscar produtos por categoria
+     * GET /api/produtos/categoria/{categoria}
+     */
+    @GetMapping("/categoria/{categoria}")
+    public List<ProdutoResponse> buscarPorCategoria(@PathVariable String categoria) {
+        return produtoService.buscarPorCategoria(categoria).stream()
+                .map(p -> new ProdutoResponse(
+                    p.getId(), p.getNome(), p.getCategoria(), 
+                    p.getDescricao(), p.getPreco(), p.getDisponivel()))
+                .collect(Collectors.toList());
+    }
 }

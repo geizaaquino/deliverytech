@@ -1,5 +1,6 @@
 package com.deliverytech.delivery_api.service;
 
+import com.deliverytech.delivery_api.dto.request.ItemPedidoRequest;
 import com.deliverytech.delivery_api.model.Pedido;
 import com.deliverytech.delivery_api.model.StatusPedido;
 
@@ -29,6 +30,13 @@ public interface PedidoService {
     
     // === CÁLCULOS ===
     BigDecimal calcularTotal(Pedido pedido);                
+    /**
+     * Calcular total do pedido baseado nos itens (sem salvar)
+     * Para cotações e pré-cálculos
+     * @param itens lista de itens do pedido
+     * @return valor total calculado
+     */
+    BigDecimal calcularTotalPedido(List<ItemPedidoRequest> itens);
     
     // === RELATÓRIOS ===
     List<Pedido> buscarPorPeriodo(LocalDateTime inicio, LocalDateTime fim);
