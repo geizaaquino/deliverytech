@@ -1,0 +1,10 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:19:31
+Método: PATCH
+URL Completa: http://localhost:8080/api/produtos/2/disponibilidade?disponivel=false
+Status HTTP: 404
+Content-Type: null
+
+
+=== RESPOSTA REAL ===
+(Resposta vazia)

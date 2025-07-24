@@ -1,0 +1,26 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:35:36
+Método: GET
+URL Completa: http://localhost:8080/api/pedidos/1
+Status HTTP: 200
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+{
+  "id" : 1,
+  "clienteId" : 1,
+  "restauranteId" : 2,
+  "enderecoEntrega" : {
+    "rua" : "Das flores",
+    "numero" : "12",
+    "bairro" : "Das Margaridas",
+    "cidade" : "São Paulo",
+    "estado" : "SP",
+    "cep" : "04966-150"
+  },
+  "valorTotal" : 0.0,
+  "status" : "CRIADO",
+  "dataPedido" : "2025-07-23T21:32:35.764269",
+  "itens" : [ ]
+}

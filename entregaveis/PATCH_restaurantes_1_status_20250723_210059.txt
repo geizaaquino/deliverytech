@@ -1,0 +1,24 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:00:59
+Método: PATCH
+URL Completa: http://localhost:8080/api/restaurantes/1/status
+Status HTTP: 200
+Content-Type: application/json
+
+=== DADOS ENVIADOS ===
+{
+  "additionalProp1" : false,
+  "additionalProp2" : false,
+  "additionalProp3" : false
+}
+
+=== RESPOSTA REAL ===
+{
+  "id" : 1,
+  "nome" : "Pizza Express",
+  "categoria" : "Italiana",
+  "telefone" : "1133333333",
+  "taxaEntrega" : 3.5,
+  "tempoEntregaMinutos" : null,
+  "ativo" : null
+}

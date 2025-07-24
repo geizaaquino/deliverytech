@@ -1,0 +1,25 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:13:45
+Método: PUT
+URL Completa: http://localhost:8080/api/produtos/1
+Status HTTP: 400
+Content-Type: application/json
+
+=== DADOS ENVIADOS ===
+{
+  "nome" : "string",
+  "categoria" : "string",
+  "descricao" : "string",
+  "preco" : 30.0,
+  "restauranteId" : 0
+}
+
+=== RESPOSTA REAL ===
+{
+  "validationErrors" : {
+    "restauranteId" : "ID do restaurante deve ser positivo"
+  },
+  "error" : "Dados inválidos",
+  "timestamp" : "2025-07-23T21:13:45.047298",
+  "status" : 400
+}

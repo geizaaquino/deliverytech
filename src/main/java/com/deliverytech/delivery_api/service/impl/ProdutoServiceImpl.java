@@ -135,4 +135,10 @@ public class ProdutoServiceImpl implements ProdutoService {
             throw new IllegalArgumentException("Preço não pode ser superior a R$ 99.999,99");
         }
     }
+
+    @Override
+    public List<Produto> buscarPorNome(String nome) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarPorNome'");
+    }
 }

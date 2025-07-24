@@ -1,0 +1,17 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:25:30
+Método: GET
+URL Completa: http://localhost:8080/api/produtos/restaurante/1
+Status HTTP: 200
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+[ {
+  "id" : 2,
+  "nome" : "Suchi",
+  "categoria" : "asiatica",
+  "descricao" : "molho shoyo e macarrão",
+  "preco" : 40.0,
+  "disponivel" : false
+} ]

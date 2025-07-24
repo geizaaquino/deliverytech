@@ -1,0 +1,21 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:39:53
+Método: PATCH
+URL Completa: http://localhost:8080/api/pedidos/2/status
+Status HTTP: 400
+Content-Type: application/json
+
+=== DADOS ENVIADOS ===
+{
+  "additionalProp1" : "confirmado",
+  "additionalProp2" : "confirmado",
+  "additionalProp3" : "confirmado"
+}
+
+=== RESPOSTA REAL ===
+{
+  "error" : "Requisição inválida",
+  "message" : "Status é obrigatório",
+  "timestamp" : "2025-07-23T21:39:53.4559605",
+  "status" : 400
+}

@@ -1,0 +1,29 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 19:25:14
+Método: POST
+URL Completa: http://localhost:8080/api/restaurantes
+Status HTTP: 200
+Content-Type: application/json
+
+=== DADOS ENVIADOS ===
+{
+  "nome" : "kkkkkk",
+  "categoria" : "vegetariana",
+  "endereco" : "rua das flores",
+  "taxaEntrega" : 10.0,
+  "tempoEntregaMinutos" : 20,
+  "telefone" : "1122222222",
+  "email" : "eu@eu.com.br",
+  "avaliacao" : 5
+}
+
+=== RESPOSTA REAL ===
+{
+  "id" : 3,
+  "nome" : "kkkkkk",
+  "categoria" : "vegetariana",
+  "telefone" : "1122222222",
+  "taxaEntrega" : 10.0,
+  "tempoEntregaMinutos" : 20,
+  "ativo" : true
+}

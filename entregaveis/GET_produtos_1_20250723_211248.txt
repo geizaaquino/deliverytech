@@ -1,0 +1,17 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:12:48
+Método: GET
+URL Completa: http://localhost:8080/api/produtos/1
+Status HTTP: 200
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+{
+  "id" : 1,
+  "nome" : "espaghette",
+  "categoria" : "massa",
+  "descricao" : "molho de tomate",
+  "preco" : 50.0,
+  "disponivel" : true
+}

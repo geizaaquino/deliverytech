@@ -1,0 +1,10 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:20:09
+Método: GET
+URL Completa: http://localhost:8080/api/produtos/1
+Status HTTP: 404
+Content-Type: null
+
+
+=== RESPOSTA REAL ===
+(Resposta vazia)

@@ -1,0 +1,15 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:59:53
+Método: GET
+URL Completa: http://localhost:8080/api/relatorios/resumo-vendas?dataInicio=01%2F07%2F2025&dataFim=23%2F07%2F2025
+Status HTTP: 500
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+{
+  "error" : "Erro interno do servidor",
+  "message" : "Ocorreu um erro inesperado",
+  "timestamp" : "2025-07-23T21:59:53.6680972",
+  "status" : 500
+}

@@ -10,6 +10,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     List<Produto> findByRestauranteId(Long restauranteId);
     List<Produto> findByDisponivelTrue();
     List<Produto> findByCategoria(String categoria);
+    List<Produto> findByNomeContainingIgnoreCase(String nome);
     
     @Query(value = "SELECT p.nome, COUNT(ip.produto_id) as quantidade_vendida " +
                    "FROM produto p " +
@@ -19,5 +20,4 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
                    "LIMIT 5", nativeQuery = true)
     List<Object[]> produtosMaisVendidos();
 }
-
 

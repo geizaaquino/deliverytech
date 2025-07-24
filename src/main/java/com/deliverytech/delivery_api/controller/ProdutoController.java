@@ -39,8 +39,9 @@ public class ProdutoController {
                 .build();
 
         Produto salvo = produtoService.cadastrar(produto);
-        return ResponseEntity.ok(new ProdutoResponse(
-                salvo.getId(), salvo.getNome(), salvo.getCategoria(), salvo.getDescricao(), salvo.getPreco(), salvo.getDisponivel()));
+        return ResponseEntity.status(201).body(new ProdutoResponse(
+                salvo.getId(), salvo.getNome(), salvo.getCategoria(), 
+                salvo.getDescricao(), salvo.getPreco(), salvo.getDisponivel()));
     }
 
     @GetMapping("/restaurante/{restauranteId}")
@@ -112,5 +113,22 @@ public class ProdutoController {
                     p.getId(), p.getNome(), p.getCategoria(), 
                     p.getDescricao(), p.getPreco(), p.getDisponivel()))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Busca produtos por nome
+     * GET /api/produtos/buscar?nome={nome}
+     */
+    @GetMapping("/buscar")
+    public ResponseEntity<List<ProdutoResponse>> buscarPorNome(@RequestParam String nome) {
+        List<Produto> produtos = produtoService.buscarPorNome(nome);
+        
+        List<ProdutoResponse> response = produtos.stream()
+            .map(p -> new ProdutoResponse(
+                p.getId(), p.getNome(), p.getCategoria(),
+                p.getDescricao(), p.getPreco(), p.getDisponivel()))
+            .collect(Collectors.toList());
+        
+        return ResponseEntity.ok(response);
     }
 }

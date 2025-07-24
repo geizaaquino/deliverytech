@@ -1,0 +1,15 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 22:02:06
+Método: GET
+URL Completa: http://localhost:8080/api/relatorios/pedidos-por-periodo?dataInicio=2025-02-02&dataFim=2025-07-23
+Status HTTP: 200
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+{
+  "totalPedidos" : 150,
+  "periodo" : "2025-02-02 até 2025-07-23",
+  "agrupamento" : "total",
+  "valorTotal" : 7500.0
+}

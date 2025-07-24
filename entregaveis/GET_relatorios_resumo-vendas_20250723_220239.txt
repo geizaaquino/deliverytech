@@ -1,0 +1,16 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 22:02:39
+Método: GET
+URL Completa: http://localhost:8080/api/relatorios/resumo-vendas?dataInicio=2025-02-02&dataFim=2025-07-23
+Status HTTP: 200
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+{
+  "valorTotalVendas" : 7500.0,
+  "totalPedidos" : 150,
+  "restaurantesAtivos" : 5,
+  "clientesAtivos" : 45,
+  "ticketMedio" : 50.0
+}

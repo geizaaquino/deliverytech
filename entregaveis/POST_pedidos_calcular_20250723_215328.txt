@@ -1,0 +1,34 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:53:28
+Método: POST
+URL Completa: http://localhost:8080/api/pedidos/calcular
+Status HTTP: 200
+Content-Type: application/json
+
+=== DADOS ENVIADOS ===
+{
+  "id" : 1,
+  "clienteId" : 1,
+  "restauranteId" : 2,
+  "enderecoEntrega" : {
+    "rua" : "Das flores",
+    "numero" : "12",
+    "bairro" : "Das Margaridas",
+    "cidade" : "São Paulo",
+    "estado" : "SP",
+    "cep" : "04966-150"
+  },
+  "itens" : [ {
+    "produtoId" : 2,
+    "quantidade" : 1
+  } ]
+}
+
+=== RESPOSTA REAL ===
+{
+  "valorTotal" : 45.0,
+  "restaurante" : "Burger King",
+  "subtotal" : 40.0,
+  "moeda" : "BRL",
+  "taxaEntrega" : 5.0
+}

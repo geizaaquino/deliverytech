@@ -1,6 +1,8 @@
 package com.deliverytech.delivery_api.service;
 
 import com.deliverytech.delivery_api.dto.request.ItemPedidoRequest;
+import java.time.LocalDate;
+
 import com.deliverytech.delivery_api.model.Pedido;
 import com.deliverytech.delivery_api.model.StatusPedido;
 
@@ -37,6 +39,11 @@ public interface PedidoService {
      * @return valor total calculado
      */
     BigDecimal calcularTotalPedido(List<ItemPedidoRequest> itens);
+
+    /**
+     * Listar pedidos com filtros opcionais
+     */
+    List<Pedido> listarComFiltros(StatusPedido status, LocalDate dataInicio, LocalDate dataFim);
     
     // === RELATÓRIOS ===
     List<Pedido> buscarPorPeriodo(LocalDateTime inicio, LocalDateTime fim);

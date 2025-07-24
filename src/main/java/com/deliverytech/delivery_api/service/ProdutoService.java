@@ -22,5 +22,6 @@ public interface ProdutoService {
     
     // === REGRAS DE NEGÓCIO ===
     void alterarDisponibilidade(Long id, boolean disponivel); 
-    void validarPreco(BigDecimal preco);                      
+    void validarPreco(BigDecimal preco);
+    List<Produto> buscarPorNome(String nome);                      
 }

@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.Arrays;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/pedidos")
@@ -59,7 +61,7 @@ public class PedidoController {
 
         Pedido salvo = pedidoService.criar(pedido);
         
-        return ResponseEntity.ok(new PedidoResponse(
+        return ResponseEntity.status(201).body(new PedidoResponse(
                 salvo.getId(),
                 cliente.getId(),
                 restaurante.getId(),
@@ -67,7 +69,7 @@ public class PedidoController {
                 salvo.getValorTotal(),
                 salvo.getStatus(),
                 salvo.getDataPedido(),
-                List.of() // Lista vazia de itens inicialmente
+                List.of()
         ));
     }
 
@@ -216,21 +218,14 @@ public class PedidoController {
     // ✅ ADICIONAR: Endpoint para listar todos os pedidos
     @GetMapping
     @Transactional(readOnly = true)
-    public ResponseEntity<List<PedidoResponse>> listarTodos() {
-        List<Pedido> pedidos = pedidoService.listarTodos();
+    public ResponseEntity<List<PedidoResponse>> listarTodos(
+            @RequestParam(required = false) StatusPedido status,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim) {
+        
+        List<Pedido> pedidos = pedidoService.listarComFiltros(status, dataInicio, dataFim);
         List<PedidoResponse> pedidosResp = pedidos.stream()
-                .map(pedido -> new PedidoResponse(
-                        pedido.getId(),
-                        pedido.getCliente().getId(),
-                        pedido.getRestaurante().getId(),
-                        pedido.getEnderecoEntrega(),
-                        pedido.getValorTotal(),
-                        pedido.getStatus(),
-                        pedido.getDataPedido(),
-                        pedido.getItens() != null ? pedido.getItens().stream()
-                                .map(i -> new ItemPedidoResponse(i.getProduto().getId(), i.getProduto().getNome(), i.getQuantidade(), i.getPrecoUnitario()))
-                                .collect(Collectors.toList()) : List.of()
-                ))
+                .map(this::convertToPedidoResponse)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(pedidosResp);
@@ -330,5 +325,56 @@ public class PedidoController {
             default:
                 throw new IllegalArgumentException("Status atual inválido: " + statusAtual);
         }
+    }
+
+    /**
+     * Listar pedidos de um restaurante
+     * GET /api/restaurantes/{restauranteId}/pedidos
+     */
+    @GetMapping("/restaurante/{restauranteId}")
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<PedidoResponse>> buscarPorRestaurante(@PathVariable Long restauranteId) {
+        List<Pedido> pedidos = pedidoService.buscarPorRestaurante(restauranteId);
+        List<PedidoResponse> pedidosResp = pedidos.stream()
+                .map(this::convertToPedidoResponse)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(pedidosResp);
+    }
+
+    /**
+     * Calcular total do pedido sem salvar
+     * POST /api/pedidos/calcular
+     */
+    @PostMapping("/calcular")
+    public ResponseEntity<Map<String, Object>> calcularTotal(@Valid @RequestBody PedidoRequest request) {
+        // Buscar restaurante para obter taxa de entrega
+        Restaurante restaurante = restauranteService.buscarPorId(request.getRestauranteId())
+                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+        
+        BigDecimal subtotal = BigDecimal.ZERO;
+        
+        // Calcular subtotal dos itens (se houver)
+        if (request.getItens() != null && !request.getItens().isEmpty()) {
+            for (var itemRequest : request.getItens()) {
+                Produto produto = produtoService.buscarPorId(itemRequest.getProdutoId())
+                        .orElseThrow(() -> new RuntimeException("Produto não encontrado: " + itemRequest.getProdutoId()));
+                
+                BigDecimal valorItem = produto.getPreco()
+                        .multiply(BigDecimal.valueOf(itemRequest.getQuantidade()));
+                subtotal = subtotal.add(valorItem);
+            }
+        }
+        
+        BigDecimal taxaEntrega = restaurante.getTaxaEntrega();
+        BigDecimal valorTotal = subtotal.add(taxaEntrega);
+        
+        return ResponseEntity.ok(Map.of(
+            "subtotal", subtotal,
+            "taxaEntrega", taxaEntrega,
+            "valorTotal", valorTotal,
+            "restaurante", restaurante.getNome(),
+            "moeda", "BRL"
+        ));
     }
 }

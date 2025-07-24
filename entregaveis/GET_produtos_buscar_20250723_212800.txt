@@ -1,0 +1,15 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:28:00
+Método: GET
+URL Completa: http://localhost:8080/api/produtos/buscar?nome=Suchi
+Status HTTP: 500
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+{
+  "error" : "Erro interno do servidor",
+  "message" : "Ocorreu um erro inesperado",
+  "timestamp" : "2025-07-23T21:28:00.2843065",
+  "status" : 500
+}

@@ -1,6 +1,7 @@
 package com.deliverytech.delivery_api.service.impl;
 
-import com.deliverytech.delivery_api.dto.request.ItemPedidoRequest;import com.deliverytech.delivery_api.model.*;
+import com.deliverytech.delivery_api.dto.request.ItemPedidoRequest;
+import com.deliverytech.delivery_api.model.*;
 import com.deliverytech.delivery_api.repository.PedidoRepository;
 import com.deliverytech.delivery_api.repository.ProdutoRepository;
 import com.deliverytech.delivery_api.service.PedidoService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -227,5 +229,46 @@ public Pedido atualizarStatus(Long pedidoId, StatusPedido novoStatus) {
             .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
         pedidoRepository.delete(pedido);
         log.info("Pedido deletado - ID: {}", id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Pedido> listarComFiltros(StatusPedido status, LocalDate dataInicio, LocalDate dataFim) {
+        log.info("Listando pedidos com filtros - Status: {}, Data início: {}, Data fim: {}", status, dataInicio, dataFim);
+        
+        // Se nenhum filtro foi fornecido, retorna todos
+        if (status == null && dataInicio == null && dataFim == null) {
+            return pedidoRepository.findAll();
+        }
+        
+        // Converter LocalDate para LocalDateTime para comparação
+        LocalDateTime inicioDateTime = dataInicio != null ? dataInicio.atStartOfDay() : null;
+        LocalDateTime fimDateTime = dataFim != null ? dataFim.atTime(23, 59, 59) : null;
+        
+        // Se apenas status foi fornecido
+        if (status != null && inicioDateTime == null && fimDateTime == null) {
+            return pedidoRepository.findByStatus(status);
+        }
+        
+        // Se apenas período foi fornecido
+        if (status == null && inicioDateTime != null && fimDateTime != null) {
+            return pedidoRepository.findByDataPedidoBetween(inicioDateTime, fimDateTime);
+        }
+        
+        // Se status e período foram fornecidos
+        if (status != null && inicioDateTime != null && fimDateTime != null) {
+            return pedidoRepository.findByStatusAndDataPedidoBetween(status, inicioDateTime, fimDateTime);
+        }
+        
+        // Casos parciais (apenas dataInicio ou apenas dataFim)
+        if (inicioDateTime != null && fimDateTime == null) {
+            return pedidoRepository.findByDataPedidoGreaterThanEqual(inicioDateTime);
+        }
+        
+        if (inicioDateTime == null && fimDateTime != null) {
+            return pedidoRepository.findByDataPedidoLessThanEqual(fimDateTime);
+        }
+        
+        return pedidoRepository.findAll();
     }
 }

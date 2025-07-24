@@ -1,0 +1,10 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 21:54:49
+Método: DELETE
+URL Completa: http://localhost:8080/api/pedidos/1/cancelar
+Status HTTP: 404
+Content-Type: null
+
+
+=== RESPOSTA REAL ===
+(Resposta vazia)

@@ -1,0 +1,29 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 23/07/2025 20:40:07
+Método: POST
+URL Completa: http://localhost:8080/api/restaurantes
+Status HTTP: 201
+Content-Type: application/json
+
+=== DADOS ENVIADOS ===
+{
+  "nome" : "Suchi Bar",
+  "categoria" : "japonesa",
+  "endereco" : "Rua Lamen, 118",
+  "taxaEntrega" : 5.0,
+  "tempoEntregaMinutos" : 10,
+  "telefone" : "1122222222",
+  "email" : "suchibar@suchiba.com.br",
+  "avaliacao" : 5
+}
+
+=== RESPOSTA REAL ===
+{
+  "id" : 3,
+  "nome" : "Suchi Bar",
+  "categoria" : "japonesa",
+  "telefone" : "1122222222",
+  "taxaEntrega" : 5.0,
+  "tempoEntregaMinutos" : 10,
+  "ativo" : true
+}
