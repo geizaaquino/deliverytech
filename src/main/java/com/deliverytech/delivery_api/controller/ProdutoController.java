@@ -121,14 +121,21 @@ public class ProdutoController {
      */
     @GetMapping("/buscar")
     public ResponseEntity<List<ProdutoResponse>> buscarPorNome(@RequestParam String nome) {
-        List<Produto> produtos = produtoService.buscarPorNome(nome);
-        
-        List<ProdutoResponse> response = produtos.stream()
-            .map(p -> new ProdutoResponse(
-                p.getId(), p.getNome(), p.getCategoria(),
-                p.getDescricao(), p.getPreco(), p.getDisponivel()))
-            .collect(Collectors.toList());
-        
-        return ResponseEntity.ok(response);
+        try {
+            List<Produto> produtos = produtoService.buscarPorNome(nome);
+            
+            List<ProdutoResponse> response = produtos.stream()
+                .map(p -> new ProdutoResponse(
+                    p.getId(), p.getNome(), p.getCategoria(),
+                    p.getDescricao(), p.getPreco(), p.getDisponivel()))
+                .collect(Collectors.toList());
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            // Log do erro para debug
+            System.err.println("Erro ao buscar produtos por nome: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
     }
 }

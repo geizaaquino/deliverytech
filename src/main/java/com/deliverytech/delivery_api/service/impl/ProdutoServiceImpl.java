@@ -138,7 +138,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public List<Produto> buscarPorNome(String nome) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarPorNome'");
+        if (nome == null || nome.trim().isEmpty()) {
+            return List.of(); // Retorna lista vazia se nome for nulo ou vazio
+        }
+        return produtoRepository.findByNomeContainingIgnoreCase(nome.trim());
     }
 }

@@ -18,10 +18,11 @@ public interface ProdutoService {
     // === BUSCAS ESPECÍFICAS ===
     List<Produto> buscarPorRestaurante(Long restauranteId);   
     List<Produto> buscarPorCategoria(String categoria);       
-    List<Produto> listarDisponiveis();                       
+    List<Produto> listarDisponiveis();
+    List<Produto> buscarPorNome(String nome);
+
     
     // === REGRAS DE NEGÓCIO ===
     void alterarDisponibilidade(Long id, boolean disponivel); 
     void validarPreco(BigDecimal preco);
-    List<Produto> buscarPorNome(String nome);                      
 }

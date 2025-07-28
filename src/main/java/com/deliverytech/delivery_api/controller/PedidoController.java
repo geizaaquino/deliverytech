@@ -3,6 +3,7 @@
 package com.deliverytech.delivery_api.controller;
 
 import com.deliverytech.delivery_api.dto.request.PedidoRequest;
+import com.deliverytech.delivery_api.dto.request.StatusUpdateRequest;
 import com.deliverytech.delivery_api.dto.response.ItemPedidoResponse;
 import com.deliverytech.delivery_api.dto.response.PedidoResponse;
 import com.deliverytech.delivery_api.model.*;
@@ -255,41 +256,34 @@ public class PedidoController {
      * Atualizar status do pedido
      * PATCH /api/pedidos/{id}/status
      */
-    @Transactional
     @PatchMapping("/{id}/status")
     public ResponseEntity<PedidoResponse> atualizarStatus(@PathVariable Long id,
-                                                         @RequestBody Map<String, String> request) {
+                                                     @Valid @RequestBody StatusUpdateRequest request) {
         try {
-            // Extrair status do body
-            String statusStr = request.get("status");
-            if (statusStr == null || statusStr.trim().isEmpty()) {
-                throw new IllegalArgumentException("Status é obrigatório");
-            }
+            // Extrair status do DTO
+            String statusStr = request.getStatus();
             
             // Converter string para enum
             StatusPedido status;
             try {
                 status = StatusPedido.valueOf(statusStr.toUpperCase());
             } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Status inválido: " + statusStr + 
-                    ". Valores válidos: " + Arrays.toString(StatusPedido.values()));
+                throw new IllegalArgumentException("Status inválido: " + statusStr);
             }
             
-            // Buscar pedido
+            // ADICIONAR APENAS ESTAS 4 LINHAS:
             Pedido pedido = pedidoService.buscarPorId(id)
                     .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
             
-            // Validar transição de status
             validarTransicaoStatus(pedido.getStatus(), status);
+            // FIM DA ADIÇÃO
             
             // Atualizar status
             Pedido pedidoAtualizado = pedidoService.atualizarStatus(id, status);
             return ResponseEntity.ok(convertToPedidoResponse(pedidoAtualizado));
             
-        } catch (IllegalArgumentException e) {
-            throw e; // Será tratado pelo ExceptionHandler como 400
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao atualizar status do pedido: " + e.getMessage(), e);
+            throw new RuntimeException("Erro ao atualizar status: " + e.getMessage());
         }
     }
 
