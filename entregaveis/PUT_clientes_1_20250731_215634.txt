@@ -1,0 +1,25 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 31/07/2025 21:56:34
+Método: PUT
+URL Completa: http://localhost/api/clientes/1
+Status HTTP: 200
+Content-Type: application/json;charset=UTF-8
+
+=== DADOS ENVIADOS ===
+{
+  "nome" : "João Silva Santos",
+  "telefone" : "11999999999",
+  "email" : "joao@email.com",
+  "endereco" : "Av João da Silva"
+}
+
+=== RESPOSTA REAL ===
+{
+  "id" : 1,
+  "nome" : "João Silva Atualizado",
+  "telefone" : null,
+  "endereco" : null,
+  "email" : "joao@email.com",
+  "ativo" : true,
+  "dataCriacao" : "2025-07-31T21:56:34.0059483"
+}

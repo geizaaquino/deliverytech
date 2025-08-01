@@ -1,0 +1,21 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 31/07/2025 21:43:46
+Método: PATCH
+URL Completa: http://localhost/api/clientes/1/status
+Status HTTP: 200
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+{
+  "mensagem" : "Cliente desativado com sucesso",
+  "cliente" : {
+    "id" : 1,
+    "nome" : "João Silva Santos",
+    "telefone" : null,
+    "endereco" : null,
+    "email" : "joao@email.com",
+    "ativo" : false,
+    "dataCriacao" : "2025-07-31T21:43:46.7866716"
+  }
+}

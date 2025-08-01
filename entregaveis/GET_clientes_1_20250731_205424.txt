@@ -1,0 +1,23 @@
+=== ENTREGA - TESTE DE ENDPOINT ===
+Data/Hora: 31/07/2025 20:54:24
+Método: GET
+URL Completa: http://localhost/api/clientes/1
+Status HTTP: 200
+Content-Type: application/json
+
+
+=== RESPOSTA REAL ===
+{
+  "success" : true,
+  "data" : {
+    "id" : 1,
+    "nome" : "João Silva Santos",
+    "telefone" : "11999999999",
+    "endereco" : "Av João da Silva",
+    "email" : "joao@email.com",
+    "ativo" : true,
+    "dataCriacao" : "2025-07-31T20:54:23.6588832"
+  },
+  "message" : "Cliente encontrado",
+  "timestamp" : "2025-07-31T20:54:23.9608843"
+}
